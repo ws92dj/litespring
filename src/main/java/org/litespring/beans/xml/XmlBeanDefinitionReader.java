@@ -13,6 +13,7 @@ import org.litespring.beans.BeanDefinition;
 import org.litespring.beans.factory.BeanDefinitionException;
 import org.litespring.beans.support.BeanDefinitionRegistry;
 import org.litespring.beans.support.GenericBeanDefinition;
+import org.litespring.core.io.Resource;
 import org.litespring.utils.ClassUtils;
 
 public class XmlBeanDefinitionReader {
@@ -28,12 +29,12 @@ public static final String ID_ATTRIBUTE = "id";
 		this.registry = registry;
 	}
 	
-	public void loadBeanDefinitions(String configFile){
+	public void loadBeanDefinitions(Resource resource){
 		InputStream is = null;
 		
 		try{
-			ClassLoader cl = ClassUtils.getDefaultClassLoader();
-			is = cl.getResourceAsStream(configFile);
+			
+			is = resource.getInputStream();
 			
 			SAXReader reader = new SAXReader();
 			Document doc = reader.read(is);
@@ -50,7 +51,7 @@ public static final String ID_ATTRIBUTE = "id";
 			}
 			
 		}catch(Exception e){
-			throw new BeanDefinitionException("IOException parsing XML document " + configFile);
+			throw new BeanDefinitionException("IOException parsing XML document "+resource.getDescription());
 		}finally{
 			if(is != null){
 				try{
