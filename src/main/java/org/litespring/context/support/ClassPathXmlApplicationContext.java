@@ -1,8 +1,6 @@
 package org.litespring.context.support;
 
-import org.litespring.beans.support.DefaultBeanFactory;
-import org.litespring.beans.xml.XmlBeanDefinitionReader;
-import org.litespring.context.ApplicationContext;
+
 import org.litespring.core.io.ClassPathResource;
 import org.litespring.core.io.Resource;
 /**
@@ -20,7 +18,7 @@ public class ClassPathXmlApplicationContext extends AbstractApplicationContext{
 	@Override
 	protected Resource getResourceByPath(String path) {
 		
-		return new ClassPathResource(path);
+		return new ClassPathResource(path,this.getBeanClassLoader());
 	}
 	
 
