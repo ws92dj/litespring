@@ -17,9 +17,9 @@ import org.litespring.core.io.Resource;
 import org.litespring.utils.ClassUtils;
 
 public class XmlBeanDefinitionReader {
-public static final String ID_ATTRIBUTE = "id";
-	
+	public static final String ID_ATTRIBUTE = "id";
 	public static final String CLASS_ATTRIBUTE = "class";
+	public static final String SCOPE_ATTRIBUTE = "scope";
 	
 	
 	
@@ -47,6 +47,9 @@ public static final String ID_ATTRIBUTE = "id";
 				String beanClassName =  ele.attributeValue(CLASS_ATTRIBUTE);
 				
 				BeanDefinition bd = new GenericBeanDefinition(id, beanClassName);
+				if(ele.attribute(SCOPE_ATTRIBUTE) != null){
+					bd.setScope(ele.attributeValue(SCOPE_ATTRIBUTE));
+				}
 				this.registry.registryBeanDefinition(id, bd);
 			}
 			
